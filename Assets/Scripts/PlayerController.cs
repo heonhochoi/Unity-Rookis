@@ -2,24 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-class Tank
-{
-    public float speed;
-    Player player; // 포함 관계 Nested Prefab 
-}
-
-// Prefab Variant - 상속의 개념
-class FastTank : Tank
-{
-    
-}
-
-
-class Player
-{
-
-}
-
 
 public class PlayerController : MonoBehaviour
 {

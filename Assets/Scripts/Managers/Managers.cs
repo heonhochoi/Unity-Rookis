@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Managers : MonoBehaviour
 {
+    // manager는 SingleTon기법 사용
     static Managers s_instance; // 유일성 보장
     static Managers Instance { get { Init();  return s_instance; } } // 유일한 매니저를 가져옴
 

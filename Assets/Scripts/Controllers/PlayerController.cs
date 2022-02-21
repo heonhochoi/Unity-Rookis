@@ -34,7 +34,9 @@ public class PlayerController : MonoBehaviour
                 // Clamp함수를 통해 최대 최소 값 조절
                 float moveDist = Mathf.Clamp(_speed * Time.deltaTime,0,dir.magnitude);
                 transform.position += dir.normalized * moveDist;
-                transform.LookAt(_destPos);
+
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10*Time.deltaTime);
+                //transform.LookAt(_destPos);
             }
         }
     }

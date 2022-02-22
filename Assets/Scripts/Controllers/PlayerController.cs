@@ -35,10 +35,22 @@ public class PlayerController : MonoBehaviour
                 float moveDist = Mathf.Clamp(_speed * Time.deltaTime,0,dir.magnitude);
                 transform.position += dir.normalized * moveDist;
 
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10*Time.deltaTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 15*Time.deltaTime);
                 //transform.LookAt(_destPos);
             }
         }
+
+        if (_moveToDest)
+        {
+            Animator anim = GetComponent<Animator>();
+            anim.Play("RUN");
+        }
+        else
+        {
+            Animator anim = GetComponent<Animator>();
+            anim.Play("WAIT");
+        }
+        
     }
 
     void OnKeyboard()
@@ -69,8 +81,8 @@ public class PlayerController : MonoBehaviour
 
     void OnMouseClicked(Define.MouseEvent evt)
     {
-        if (evt != Define.MouseEvent.Click)
-            return;
+        //if (evt != Define.MouseEvent.Click)
+        //    return;
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Debug.DrawRay(Camera.main.transform.position, ray.direction * 100.0f, Color.red, 1.0f);

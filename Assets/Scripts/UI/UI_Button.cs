@@ -40,18 +40,18 @@ public class UI_Button : UI_Base
         Bind<GameObject>(typeof(GameObjects));
         Bind<Image>(typeof(Images));
 
-        GetText((int)Texts.ScoreText).text = "Bind Text";
+        GetButton((int)Buttons.PointButton).gameObject.AddUIEvent(OnButtonCllicked);
 
         GameObject go = GetImage((int)Images.ItemIcon).gameObject;
-        UI_EventHandler evt = go.GetComponent<UI_EventHandler>();
-        evt.OnDragHandler += ((PointerEventData data) => { evt.gameObject.transform.position = data.position; });
-
+        AddUIEvent(go, ((PointerEventData data) => { go.transform.position = data.position; }),Define.UIEvent.Click);
     }
     
     int _score = 0;
 
-    public void OnButtonCllicked()
+    public void OnButtonCllicked(PointerEventData data)
     {
         _score++;
+
+        GetText((int)Texts.ScoreText).text = $" Á¡¼ö : {_score}";
     }
 }

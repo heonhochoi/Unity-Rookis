@@ -2,13 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/*
-        prefab = Resources.Load<GameObject>("Prefabs/Tank");
-        tank = Instantiate(prefab);
-
-        Destroy(tank, 3.0f);
- */
-
 public class ResourceManager
 {
     public T Load<T>(string path) where T : Object

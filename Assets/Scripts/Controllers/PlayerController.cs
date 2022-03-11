@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
         Managers.Input.mouseAction -= OnMouseClicked; 
         Managers.Input.mouseAction += OnMouseClicked;
 
+        //TEMP
+        Managers.UI.ShowSceneUI<UI_Inven>(); 
     }
 
     public enum Player_state

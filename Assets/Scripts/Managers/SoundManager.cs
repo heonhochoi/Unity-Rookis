@@ -8,7 +8,9 @@ public class SoundManager
     // MP3 music    -> Audio Clip
     // ±Í           -> Audio Listener
     AudioSource[] _audioSources = new AudioSource[(int)Define.Sound.MaxCount];
-    
+
+    Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
+
     public void Init()
     {
         GameObject root = GameObject.Find("@Sound");
@@ -29,7 +31,17 @@ public class SoundManager
         _audioSources[(int)Define.Sound.Bgm].loop = true;
     }
 
-    public void Play(Define.Sound type, string path, float pitch = 1.0f)
+    public void Clear()
+    {
+        foreach(AudioSource audioSource in _audioSources)
+        {
+            audioSource.clip = null;
+            audioSource.Stop();
+        }
+        _audioClips.Clear();
+    }
+
+    public void Play( string path, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f)
     {
         if (path.Contains("Sounds/") == false)
             path = $"Sounds/{path}";
@@ -42,11 +54,18 @@ public class SoundManager
                 Debug.Log("AudioClip Missing!");
                 return;
             }
-            //TODO
+
+            AudioSource audioSource = _audioSources[(int)Define.Sound.Bgm];
+            if (audioSource.isPlaying)
+                audioSource.Stop();
+
+            audioSource.pitch = pitch;
+            audioSource.clip = audioClip;
+            audioSource.Play();
         }
         else
         {
-            AudioClip audioClip = Managers.Resource.Load<AudioClip>(path);
+            AudioClip audioClip = GetOrAddClip(path);
             if (audioClip == null)
             {
                 Debug.Log("AudioClip Missing!");
@@ -59,4 +78,14 @@ public class SoundManager
         }
     }
 
+    AudioClip GetOrAddClip(string path)
+    {
+        AudioClip audioClip = null;
+        if (_audioClips.TryGetValue(path, out audioClip) == false)
+        {
+            audioClip = Managers.Resource.Load<AudioClip>(path);
+            _audioClips.Add(path, audioClip);
+        }
+        return audioClip;
+    }
 }

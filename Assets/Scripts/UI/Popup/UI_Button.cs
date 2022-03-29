@@ -16,7 +16,6 @@ public class UI_Button : UI_Popup
     {
         PointText,
         ScoreText,
-
     }
 
     enum GameObjects
@@ -27,7 +26,6 @@ public class UI_Button : UI_Popup
     enum Images
     {
         ItemIcon,
-
     }
 
 

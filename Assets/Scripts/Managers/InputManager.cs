@@ -6,17 +6,11 @@ using UnityEngine.EventSystems;
 
 public class InputManager
 {
-    /*
-     * Action delegate의 instance keyAction 생성
-     * keyAction을 사용할 클래스들의 start 부분에서 
-     * 각자 KeyAction에 추가할 함수들을 추가
-     * 이렇게 되면 KeyAction을 사용하는 각 클래스들의 함수는 
-     * KeyAction을 거쳐 사용하게 되고 다 기록이 남게됨.
-     */
     public Action keyAction = null;
     public Action<Define.MouseEvent> mouseAction = null;
 
-    bool _mousePressed = false;
+    bool _pressed = false;
+    float _pressedTime = 0;
    
     public void OnUpdate()
     {
@@ -30,15 +24,27 @@ public class InputManager
         {
             if(Input.GetMouseButton(0))
             {
+                if (!_pressed)
+                {
+                    //Mouse를 뗀 상태에서 처음으로 누름
+                    mouseAction.Invoke(Define.MouseEvent.PointerDown);
+                    _pressedTime = Time.time;
+                }
                 mouseAction.Invoke(Define.MouseEvent.Press);
-                _mousePressed = true;
+                _pressed = true;
             }
             else
             {
-                if(_mousePressed)
-                    mouseAction.Invoke(Define.MouseEvent.Click);
-
-                _mousePressed = false;
+                if (_pressed)
+                {
+                    if(Time.time < _pressedTime + 0.2f)
+                    {                       
+                        mouseAction.Invoke(Define.MouseEvent.Click);
+                    }
+                    mouseAction.Invoke(Define.MouseEvent.PointerUp);
+                }
+                _pressed = false;
+                _pressedTime = 0;   
             }
         }
     }

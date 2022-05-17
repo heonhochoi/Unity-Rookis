@@ -54,6 +54,8 @@ public class PlayerController : MonoBehaviour
 
         Managers.Input.mouseAction -= OnMouseEvent;
         Managers.Input.mouseAction += OnMouseEvent;
+
+        Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
     }
 
     void UpdateDie()
@@ -77,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
         //¿Ãµø
         Vector3 dir = _destPos - transform.position;
-        Debug.Log($"dir.magnitude = {dir.magnitude}");
+        //Debug.Log($"dir.magnitude = {dir.magnitude}");
         if (dir.magnitude <= 0.1f )
         {
             State = Player_state.Idle;
@@ -116,7 +118,16 @@ public class PlayerController : MonoBehaviour
 
     void OnHitEvent()
     {
-        Debug.Log("On Hit Event");
+        if(_lockTarget != null)
+        {
+            Stat _targetStat = _lockTarget.GetComponent<Stat>();
+            PlayerStat myStat = gameObject.GetComponent<PlayerStat>();
+            int damage = Mathf.Max(0,myStat.Attack - _targetStat.Defence);
+
+            Debug.Log($"{damage}");
+
+            _targetStat.Hp -= damage;
+        }
 
         if (_stopSkill)
         {

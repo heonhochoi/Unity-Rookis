@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace Data
 {
-
     #region Stat
     [Serializable]
     public class Stat
@@ -29,5 +28,5 @@ namespace Data
             return dict;
         }
     }
+    #endregion
 }
-#endregion

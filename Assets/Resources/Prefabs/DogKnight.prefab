@@ -658,6 +658,7 @@ GameObject:
   - component: {fileID: 8682212815241578651}
   - component: {fileID: 8682212815241578662}
   - component: {fileID: 6146324374085337917}
+  - component: {fileID: 7941007544819178899}
   m_Layer: 8
   m_Name: DogKnight
   m_TagString: Untagged
@@ -733,6 +734,22 @@ CapsuleCollider:
   m_Height: 1.7105631
   m_Direction: 1
   m_Center: {x: -0.04327452, y: 0.6381634, z: -0.07541889}
+--- !u!114 &7941007544819178899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8682212815241578650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7083dad7d50e19647a3c91429c8ae6cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _destPos: {x: 0, y: 0, z: 0}
+  _state: 2
+  _mask: 768
+  _lockTarget: {fileID: 0}
 --- !u!1 &8682212815311292001
 GameObject:
   m_ObjectHideFlags: 0

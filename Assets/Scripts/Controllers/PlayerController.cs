@@ -36,14 +36,12 @@ public class PlayerController : BaseController
 
         //¿Ãµø
         Vector3 dir = _destPos - transform.position;
-        //Debug.Log($"dir.magnitude = {dir.magnitude}");
         if (dir.magnitude <= 0.1f )
         {
             State = Define.State.Idle;
         }
         else
         {
-            //Debug.DrawRay(transform.position + Vector3.up, dir.normalized, Color.blue, 1.0f);
             if (Physics.Raycast(transform.position + Vector3.up * 0.5f, dir, 1.0f, LayerMask.GetMask("Block")))
             {
                 if(Input.GetMouseButton(0) == false)
@@ -73,8 +71,7 @@ public class PlayerController : BaseController
         if(_lockTarget != null)
         {
             Stat _targetStat = _lockTarget.GetComponent<Stat>();
-            int damage = Mathf.Max(0,_stat.Attack - _targetStat.Defence);
-            _targetStat.Hp -= damage;
+            _targetStat.OnAttacked(_stat);
         }            
 
         if (_stopSkill)
@@ -113,7 +110,6 @@ public class PlayerController : BaseController
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         bool raycastHit = Physics.Raycast(ray, out hit, 100.0f, _mask);
-        //Debug.DrawRay(Camera.main.transform.position, ray.direction * 100.0f, Color.red, 1.0f);
 
         switch (evt)
         {

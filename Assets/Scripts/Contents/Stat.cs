@@ -22,7 +22,7 @@ public class Stat : MonoBehaviour
     public int MaxHp { get { return _maxHp; } set { _maxHp = value; } }
     public int Attack { get { return _attack; } set { _attack = value; } }
     public int Defence { get { return _defence; } set { _defence = value; } }
-    public float MoveSpeed { get { return _moveSpeed; } set { _moveSpeed   = value; } }
+    public float MoveSpeed { get { return _moveSpeed; } set { _moveSpeed = value; } }
 
     private void Start()
     {
@@ -32,5 +32,28 @@ public class Stat : MonoBehaviour
         _attack = 10;
         _defence = 5;
         _moveSpeed = 5.0f;
+    }
+
+    public virtual void OnAttacked(Stat attacker)
+    {
+        int damage = Mathf.Max(0, attacker.Attack - Defence);
+        Hp -= damage;
+
+        if (Hp <= 0)
+        {
+            Hp = 0;
+            OnDead(attacker);
+        }
+    }
+
+    protected virtual void OnDead(Stat attacker)
+    {
+        PlayerStat playerStat = attacker as PlayerStat;
+        if(playerStat != null)
+        {
+            playerStat.Exp += 5;
+        }
+
+        Managers.Game.Despawn(gameObject); 
     }
 }

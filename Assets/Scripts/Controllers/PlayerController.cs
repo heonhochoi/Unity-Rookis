@@ -11,6 +11,8 @@ public class PlayerController : BaseController
 
     public override void Init()
     {
+        WorldObjectType = Define.WorldObject.Player;
+
         _stat = gameObject.GetComponent<PlayerStat>();
         Managers.Input.mouseAction -= OnMouseEvent;
         Managers.Input.mouseAction += OnMouseEvent;
@@ -71,10 +73,9 @@ public class PlayerController : BaseController
         if(_lockTarget != null)
         {
             Stat _targetStat = _lockTarget.GetComponent<Stat>();
-            PlayerStat myStat = gameObject.GetComponent<PlayerStat>();
-            int damage = Mathf.Max(0,myStat.Attack - _targetStat.Defence);
+            int damage = Mathf.Max(0,_stat.Attack - _targetStat.Defence);
             _targetStat.Hp -= damage;
-        }
+        }            
 
         if (_stopSkill)
         {

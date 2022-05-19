@@ -15,6 +15,8 @@ public class MonsterController : BaseController
 
     public override void Init()
     {
+        WorldObjectType = Define.WorldObject.Monster;
+
         _stat = gameObject.GetComponent<Stat>();
 
         if (gameObject.GetComponentInChildren<UI_HPBar>() == null)
@@ -23,7 +25,7 @@ public class MonsterController : BaseController
 
     protected override void UpdateIdle()
     {
-        Debug.Log("Monster Update die");
+        //Debug.Log("Monster Update die");
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
@@ -34,7 +36,7 @@ public class MonsterController : BaseController
         {
             _lockTarget = player;
             State = Define.State.Moving;
-            Debug.Log($"{distance}");
+            //Debug.Log($"{distance}");
             return;
         }
     }
@@ -74,7 +76,7 @@ public class MonsterController : BaseController
 
     protected override void UpdateSkill()
     {
-        Debug.Log("Monster Update skill");
+        //Debug.Log("Monster Update skill");
         if (_lockTarget != null)
         {
             Vector3 dir = _lockTarget.transform.position - transform.position;
@@ -91,6 +93,12 @@ public class MonsterController : BaseController
             Stat myStat = gameObject.GetComponent<Stat>();
             int damage = Mathf.Max(0, myStat.Attack - _targetStat.Defence);
             _targetStat.Hp -= damage;
+
+            if (_targetStat.Hp <= 0)
+            {
+                Managers.Game.Despawn(_targetStat.gameObject);
+            }
+
 
             if (_targetStat.Hp > 0)
             {

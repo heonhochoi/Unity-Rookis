@@ -13,7 +13,7 @@ public class GameScene : BaseScene
 {
     protected override void Init()
     {
-        base.Init(); 
+        base.Init();
 
         SceneType = Define.Scene.Game;
 
@@ -24,11 +24,13 @@ public class GameScene : BaseScene
         gameObject.GetOrAddComponent<CursorController>();
 
         GameObject player = Managers.Game.Spawn(Define.WorldObject.Player, "UnityChan");
-        Camera.main.gameObject.GetOrAddComponent<CameraCotroller>().SetPlayer(player);        
+        Camera.main.gameObject.GetOrAddComponent<CameraCotroller>().SetPlayer(player);
 
-        Managers.Game.Spawn(Define.WorldObject.Monster, "DogKnight");
+        //Managers.Game.Spawn(Define.WorldObject.Monster, "DogKnight");
+        GameObject go = new GameObject { name = "SpawningPool" };
+        SpawningPool pool = go.GetOrAddComponent<SpawningPool>();
+        pool.SetKeepMonsterCount(5);
 
-        
     }
 
     public override void Clear()

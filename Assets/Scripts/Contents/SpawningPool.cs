@@ -30,7 +30,7 @@ public class SpawningPool : MonoBehaviour
 
     void Update()
     {
-        while(_monsterCount < _keepMonsterCount)
+        while(_reserveCount + _monsterCount < _keepMonsterCount)
         {
             StartCoroutine("ReserveSpawn");
         }
